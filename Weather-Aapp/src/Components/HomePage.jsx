@@ -150,7 +150,6 @@ const HomePage = () => {
               className="fw-bold m-0 text-dark"
               style={{
                 color: '#1E293B',
-                letterSpacing: '-0.5px'
               }}
             >
               Atmos
@@ -180,7 +179,7 @@ const HomePage = () => {
 
               <input
                 type="text"
-                className="form-control rounded-pill ps-5 pe-4 py-2"
+                className="form-control rounded-4 ps-5 pe-4 py-2"
                 placeholder="Search a city..."
                 value={city}
                 onChange={(e) => {
@@ -232,7 +231,7 @@ const HomePage = () => {
                 stiffness: 350,
                 damping: 18
               }}
-              className="btn text-white rounded-pill px-4 py-2 fw-semibold flex-shrink-0"
+              className="btn text-white rounded-4 px-4 py-2 fw-semibold flex-shrink-0"
               style={{
                 backgroundColor: '#63A5E8',
                 border: 'none'
@@ -389,7 +388,6 @@ const HomePage = () => {
                 className="fw-bold text-dark mt-2 mb-2"
                 style={{
                   fontSize: '2rem',
-                  letterSpacing: '-0.5px'
                 }}
               >
                 {error === "Couldn't find that city."
@@ -512,7 +510,6 @@ const HomePage = () => {
                 className="fw-bold text-dark mt-3 mb-2"
                 style={{
                   fontSize: '2rem',
-                  letterSpacing: '-0.5px'
                 }}
               >
                 What's the weather like?
@@ -732,7 +729,8 @@ const HomePage = () => {
                       whileHover={{
                         y: -3,
                         boxShadow:
-                          '0 8px 20px rgba(15, 23, 42, 0.06)'
+                          '0 8px 20px rgba(15, 23, 42, 0.06)',
+                         
                       }}
                       className="p-3 border-0 h-100 d-flex flex-column justify-content-center"
                       style={{
@@ -740,6 +738,7 @@ const HomePage = () => {
                         borderRadius: '20px',
                         transition:
                           'box-shadow 0.2s ease'
+                         
                       }}
                     >
                       <div className="fs-5 mb-1">
@@ -768,10 +767,8 @@ const HomePage = () => {
               <div className="pt-3 border-top border-light">
 
                 <p
-                  className="text-secondary fw-bold small mb-2"
-                  style={{
-                    letterSpacing: '0.5px'
-                  }}
+                  className="text-secondary fw-bold small mb-4"
+                 
                 >
                   TRY ANOTHER CITY
                 </p>
