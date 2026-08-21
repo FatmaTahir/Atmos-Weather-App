@@ -63,69 +63,58 @@ const HomePage = () => {
         style={{ maxWidth: '900px', backgroundColor: '#ffffff', borderRadius: '32px' }}
       >
         {/* Top Header Bar */}
-        <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 pb-3 border-bottom border-light">
-          {/* Logo Section with Hover Animation & Soft Shadow */}
-          <motion.div 
-            className="d-flex align-items-center gap-2"
-            whileHover="hover"
-            style={{ cursor: 'pointer' }}
-          >
+        <div className="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 mb-4 pb-3 border-bottom border-light">
+          {/* Left Brand Logo + Title */}
+          <div className="d-flex align-items-center gap-2">
             <motion.div 
-              className="p-2 text-white d-flex align-items-center justify-content-center" 
-              style={{ backgroundColor: '#78B3EA', borderRadius: '14px', width: '42px', height: '42px' }}
-              variants={{
-                hover: { 
-                  scale: 1.08, 
-                  rotate: [0, -8, 8, 0],
-                  boxShadow: '0 8px 20px rgba(120, 179, 234, 0.45)'
-                }
+              whileHover={{ 
+                scale: 1.08, 
+                rotate: 4,
+                boxShadow: '0 8px 20px rgba(120, 179, 234, 0.45)' 
               }}
-              transition={{ duration: 0.3 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 300, damping: 15 }}
+              className="p-2 text-white d-flex align-items-center justify-content-center" 
+              style={{ 
+                backgroundColor: '#78B3EA', 
+                borderRadius: '14px', 
+                width: '42px', 
+                height: '42px',
+                cursor: 'pointer' 
+              }}
             >
               <FaCloudSun size={24} />
             </motion.div>
-            <motion.h4 
-              className="fw-bold m-0" 
-              style={{ color: '#1E293B', letterSpacing: '-0.5px' }}
-              variants={{
-                hover: { color: '#63A5E8' }
-              }}
-            >
-              Atmos
-            </motion.h4>
-          </motion.div>
+            <h4 className="fw-bold m-0 text-dark" style={{ color: '#1E293B', letterSpacing: '-0.5px' }}>Atmos</h4>
+          </div>
 
           {/* Right Control Group */}
-          <div className="d-flex align-items-center gap-2 w-100 w-md-auto mt-3 mt-md-0">
-            {/* Animated Expandable Search Container */}
+          <div className="d-flex align-items-center gap-2 w-100 w-md-auto justify-content-end">
+            {/* Search Input Container */}
             <motion.div 
               className="position-relative"
-              animate={{ 
-                width: isFocused || city ? '320px' : '250px' 
-              }}
-              transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+              animate={{ width: isFocused ? '340px' : '240px' }}
+              transition={{ type: 'spring', stiffness: 280, damping: 24 }}
             >
               <FiSearch 
-                className="position-absolute top-50 start-0 translate-middle-y ms-3" 
+                className={`position-absolute top-50 start-0 translate-middle-y ms-3 `} 
                 size={18} 
-                style={{ color: isFocused ? '#63A5E8' : '#94A3B8', transition: 'color 0.2s' }}
               />
               <input
                 type="text"
                 className="form-control rounded-pill ps-5 pe-4 py-2"
                 placeholder="Search a city..."
                 value={city}
+                onChange={(e) => setCity(e.target.value)}
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
-                onChange={(e) => setCity(e.target.value)}
                 onKeyDown={handleKeyPress}
                 style={{ 
                   backgroundColor: '#ffffff', 
                   borderColor: isFocused ? '#78B3EA' : '#E2E8F0', 
-                  borderWidth: '1.5px',
-                  boxShadow: isFocused ? '0 0 0 4px rgba(120, 179, 234, 0.25)' : 'none',
                   fontSize: '0.95rem',
                   outline: 'none',
+                  boxShadow: isFocused ? '0 0 0 4px rgba(120, 179, 234, 0.25)' : 'none',
                   transition: 'border-color 0.2s, box-shadow 0.2s'
                 }}
               />
@@ -138,22 +127,24 @@ const HomePage = () => {
               )}
             </motion.div>
 
-            <button 
-              className="btn btn-light rounded-circle p-2 d-flex align-items-center justify-content-center border"
-              onClick={() => getWeather()}
-              style={{ width: '42px', height: '42px', borderColor: '#E2E8F0', backgroundColor: '#ffffff' }}
-            >
-              <FiMapPin className="text-secondary" size={18} />
-            </button>
+            
 
-            <button 
-              className="btn text-white rounded-pill px-4 py-2 fw-semibold"
+            {/* Search Action Button */}
+            <motion.button 
+              whileHover={{ 
+                scale: 1.03, 
+                y: -2,
+                boxShadow: '0 8px 18px rgba(99, 165, 232, 0.45)' 
+              }}
+              whileTap={{ scale: 0.96 }}
+              transition={{ type: "spring", stiffness: 350, damping: 18 }}
+              className="btn text-white rounded-pill px-4 py-2 fw-semibold flex-shrink-0"
               style={{ backgroundColor: '#63A5E8', border: 'none' }}
               onClick={() => getWeather()}
               disabled={loading}
             >
               {loading ? 'Search...' : 'Search'}
-            </button>
+            </motion.button>
           </div>
         </div>
 
@@ -169,7 +160,6 @@ const HomePage = () => {
               className="text-center py-5"
             >
               <div className="position-relative d-inline-block my-3">
-                {/* Rotating Sun */}
                 <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ repeat: Infinity, duration: 25, ease: 'linear' }}
@@ -192,7 +182,6 @@ const HomePage = () => {
                     ))}
                   </svg>
                 </motion.div>
-                {/* Floating Cloud */}
                 <div 
                   className="position-absolute bottom-0 start-50 translate-middle-x"
                   style={{ marginBottom: '10px', marginLeft: '20px' }}
@@ -210,21 +199,37 @@ const HomePage = () => {
                 Search for a city and discover its atmosphere.
               </p>
 
-              {/* Suggestions Pill Bar */}
+              {/* Suggestions Pill Bar - Empty State Fix */}
               <div className="d-flex flex-wrap justify-content-center gap-2 mt-4">
                 {popularCities.map((cityName) => (
-                  <button
+                  <motion.button
                     key={cityName}
                     onClick={() => {
                       setCity(cityName);
                       getWeather(cityName);
                     }}
-                    className="btn btn-outline-light rounded-pill px-3 py-2 btn-sm border d-flex align-items-center gap-1"
-                    style={{ borderColor: '#E2E8F0', color: '#475569', backgroundColor: '#ffffff' }}
+                    whileHover={{ 
+                      scale: 1.05, 
+                      borderColor: '#78B3EA', 
+                      color: '#63A5E8', 
+                      boxShadow: '0 4px 12px rgba(120, 179, 234, 0.25)' 
+                    }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+                    className="rounded-pill px-3 py-2 border d-flex align-items-center gap-1"
+                    style={{ 
+                      borderColor: '#E2E8F0', 
+                      color: '#475569', 
+                      backgroundColor: '#ffffff',
+                      fontSize: '0.875rem',
+                      fontWeight: 500,
+                      cursor: 'pointer',
+                      outline: 'none'
+                    }}
                   >
                     <FiMapPin size={14} className="text-secondary" />
                     <span>{cityName}</span>
-                  </button>
+                  </motion.button>
                 ))}
               </div>
             </motion.div>
@@ -275,10 +280,10 @@ const HomePage = () => {
               {/* Metrics Grid */}
               <div className="row g-3 my-4">
                 {[
-                  { label: 'HUMIDITY', value: `${weather.main.humidity} %`, icon: <FiDroplet className="text-primary" /> },
-                  { label: 'WIND', value: `${windSpeed} km/h`, icon: <FiWind className="text-info" /> },
+                  { label: 'HUMIDITY', value: `${weather.main.humidity} %`, icon: <FiDroplet className="text-info" /> },
+                  { label: 'WIND', value: `${windSpeed} km/h`, icon: <FiWind className="text-primary" /> },
                   { label: 'FEELS LIKE', value: `${Math.round(weather.main.feels_like)}°`, icon: <FiThermometer className="text-warning" /> },
-                  { label: 'VISIBILITY', value: `${visibility} km`, icon: <FiEye className="text-primary" /> },
+                  { label: 'VISIBILITY', value: `${visibility} km`, icon: <FiEye className="text-success" /> },
                   { label: 'PRESSURE', value: `${weather.main.pressure} hPa`, icon: <FiClock className="text-secondary" /> },
                   { label: 'UV INDEX', value: '2', icon: <FiSun className="text-warning" /> },
                 ].map((metric, idx) => (
@@ -288,7 +293,7 @@ const HomePage = () => {
                       style={{ backgroundColor: '#F8FAFC', borderRadius: '20px' }}
                     >
                       <div className="fs-5 mb-1">{metric.icon}</div>
-                      <span className="text-secondary fw-bold" style={{ fontSize: '0.7rem', letterSpacing: '0.5px' }}>
+                      <span className="text-secondary fw-semibold " style={{ fontSize: '0.7rem' }}>
                         {metric.label}
                       </span>
                       <h4 className="fw-bold text-dark m-0 mt-1">{metric.value}</h4>
@@ -297,24 +302,39 @@ const HomePage = () => {
                 ))}
               </div>
 
-              {/* City Suggestions Bottom */}
+              {/* City Suggestions Bottom - Weather State Fix */}
               <div className="pt-3 border-top border-light">
                 <p className="text-secondary fw-bold small mb-2" style={{ letterSpacing: '0.5px' }}>
                   TRY ANOTHER CITY
                 </p>
                 <div className="d-flex flex-wrap gap-2">
                   {popularCities.map((cityName) => (
-                    <button
+                    <motion.button
                       key={cityName}
                       onClick={() => {
                         setCity(cityName);
                         getWeather(cityName);
                       }}
-                      className="btn btn-outline-light rounded-pill px-3 py-1 btn-sm border bg-white text-dark shadow-sm"
-                      style={{ borderColor: '#E2E8F0' }}
+                      whileHover={{ 
+                        scale: 1.05, 
+                        borderColor: '#78B3EA', 
+                        color: '#63A5E8', 
+                        boxShadow: '0 4px 12px rgba(120, 179, 234, 0.25)' 
+                      }}
+                      whileTap={{ scale: 0.95 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+                      className="rounded-pill px-3 py-1 border bg-white shadow-sm"
+                      style={{ 
+                        borderColor: '#E2E8F0', 
+                        color: '#334155',
+                        fontSize: '0.875rem',
+                        fontWeight: 500,
+                        cursor: 'pointer',
+                        outline: 'none'
+                      }}
                     >
                       {cityName}
-                    </button>
+                    </motion.button>
                   ))}
                 </div>
               </div>
