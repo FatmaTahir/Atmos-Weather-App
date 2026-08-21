@@ -15,7 +15,6 @@ import { FaCloudSun } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { MdOutlineWbSunny } from "react-icons/md";
 
-
 const HomePage = () => {
   const [city, setCity] = useState('');
   const [weather, setWeather] = useState(null);
@@ -35,27 +34,20 @@ const HomePage = () => {
     'Paris'
   ];
 
-  // Get weather from API
   const getWeather = async (searchCity = city) => {
     const trimmedCity = searchCity.trim();
-
-    // Don't search if input is empty
     if (!trimmedCity) {
       setError('Please enter a city name.');
       setWeather(null);
       return;
     }
-
     setLoading(true);
     setError('');
     setWeather(null);
-
     try {
       const url = `https://api.openweathermap.org/data/2.5/weather?q=${trimmedCity}&appid=${API_KEY}&units=metric`;
-
       const response = await fetch(url);
       const data = await response.json();
-
       if (!response.ok) {
         if (response.status === 404) {
           setError("Couldn't find that city.");
@@ -65,7 +57,6 @@ const HomePage = () => {
 
         return;
       }
-
       setWeather(data);
     } catch (error) {
       console.error('Error fetching weather data:', error);
@@ -75,24 +66,18 @@ const HomePage = () => {
     }
   };
 
-  // Search when Enter is pressed
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       getWeather();
     }
   };
-
-  // Search button
   const handleSearch = () => {
     getWeather();
   };
-
-  // Wind conversion: m/s → km/h
   const windSpeed = weather?.wind?.speed
     ? Math.round(weather.wind.speed * 3.6)
     : 0;
 
-  // Visibility conversion: meters → km
   const visibility = weather?.visibility
     ? weather.visibility / 1000
     : 0;
@@ -107,8 +92,12 @@ const HomePage = () => {
       }}
     >
       <motion.div
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, y: 30, scale: 0.96 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{
+          duration: 0.6,
+          ease: [0.16, 1, 0.3, 1]
+        }}
         className="card border-0 shadow-sm p-4 p-md-5 w-100"
         style={{
           maxWidth: '900px',
@@ -185,7 +174,6 @@ const HomePage = () => {
                 onChange={(e) => {
                   setCity(e.target.value);
 
-                  // Remove previous error when user starts typing again
                   if (error) {
                     setError('');
                   }
@@ -243,8 +231,6 @@ const HomePage = () => {
             </motion.button>
           </div>
         </div>
-
-        {/* ================= CONTENT ================= */}
 
         <AnimatePresence mode="wait">
 
@@ -436,9 +422,10 @@ const HomePage = () => {
             /* ================= INITIAL EMPTY STATE ================= */
             <motion.div
               key="empty-state"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.4, delay: 0.2 }}
               className="text-center py-5"
             >
               <div className="position-relative d-inline-block my-3">
@@ -730,7 +717,6 @@ const HomePage = () => {
                         y: -3,
                         boxShadow:
                           '0 8px 20px rgba(15, 23, 42, 0.06)',
-                         
                       }}
                       className="p-3 border-0 h-100 d-flex flex-column justify-content-center"
                       style={{
@@ -738,7 +724,6 @@ const HomePage = () => {
                         borderRadius: '20px',
                         transition:
                           'box-shadow 0.2s ease'
-                         
                       }}
                     >
                       <div className="fs-5 mb-1">
@@ -768,7 +753,6 @@ const HomePage = () => {
 
                 <p
                   className="text-secondary fw-bold small mb-4"
-                 
                 >
                   TRY ANOTHER CITY
                 </p>
